@@ -44,3 +44,4 @@ mobileinside_crawler(file_path)
 vrn_crawler(file_path)
 sciencetimes_crawler(file_path)
 
+print('something')
