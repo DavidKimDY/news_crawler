@@ -132,7 +132,6 @@ dmypy.json
 =======
 
 *.json
->>>>>>> test
 .DS_Store
 .idea/
 DB file/
