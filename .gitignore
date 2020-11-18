@@ -127,10 +127,6 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
-<<<<<<< HEAD
-*.json
-=======
-
 *.json
 .DS_Store
 .idea/
