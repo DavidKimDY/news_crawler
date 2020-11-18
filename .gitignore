@@ -131,9 +131,9 @@ dmypy.json
 *.json
 =======
 
-# *.json
+*.json
 >>>>>>> test
 .DS_Store
 .idea/
-# DB file/
+DB file/
 *.ipynb
