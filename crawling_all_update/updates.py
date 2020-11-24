@@ -43,5 +43,3 @@ itnews_crawler(file_path, url_file_path_itnews)
 mobileinside_crawler(file_path)
 vrn_crawler(file_path)
 sciencetimes_crawler(file_path)
-
-print('Test!!')
