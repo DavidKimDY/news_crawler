@@ -77,7 +77,7 @@ def itnews_crawler(file_path, url_path):
 
     new_url = url_crawler(existed_url)
     result = scraping(new_url, ID_PARAMS)
-    print(new_url)
+    #print(new_url)
 
     if result:
         with open(file, 'r', encoding='utf-8') as f:
@@ -85,4 +85,6 @@ def itnews_crawler(file_path, url_path):
         data.extend(result)
         with open(file, 'w', encoding='utf-8') as f:
             json.dump(data, f,  ensure_ascii=False, indent='\t')
+
+    print(CORP, ' Done')
 
