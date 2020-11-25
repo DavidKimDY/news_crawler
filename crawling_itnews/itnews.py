@@ -86,4 +86,3 @@ def itnews_crawler(file_path, url_path):
             json.dump(data, f,  ensure_ascii=False, indent='\t')
 
     print(CORP, ' Done')
-
