@@ -25,9 +25,9 @@ def parse_thumb(_thumb):
 
 
 def parse_cat(_cat):
-    cat_list = {'133':'자연,환경,에너지', '128':'기초,응용과학',
-                '16933':'ICT,로봇','130':'보건,의학',
-                '132':'항공,우주','134':'신소재,신기술'}
+    cat_list = {'133': '자연,환경,에너지', '128': '기초,응용과학',
+                '16933': 'ICT,로봇', '130': '보건,의학',
+                '132': '항공,우주', '134': '신소재,신기술'}
     cat = _cat.previous.previous
     cat = cat.find('a')
     cat = cat.attrs['href']
@@ -116,11 +116,9 @@ def sciencetimes_crawler(file_path):
     try:
         with open(file, 'r', encoding='utf-8') as f:
             data = json.load(f)
-        last_url = data[0]['url']
         update = True
 
     except FileNotFoundError:
-        last_url = None
         data = None
         update = False
         dump, page_num = start_from_dump(CORP)

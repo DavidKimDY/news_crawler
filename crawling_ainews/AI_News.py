@@ -46,7 +46,7 @@ def parse_time(_time):
     return time
 
 
-def crawler(page_num, category_num, category_name, update, whole_data=None):
+def crawler(page_num, category_num, category_name, update, last_url, whole_data=None):
 
     page = main_page.format(page_num, category_num)
 
@@ -81,7 +81,7 @@ def crawler(page_num, category_num, category_name, update, whole_data=None):
                'cat1': category_name,
                'cat2': cat}
         
-        if update and stop(obj, whole_data):
+        if update and url == last_url:
                 last_page = True
                 return one_page, last_page
 
@@ -105,18 +105,20 @@ def ainews_crawler(individual_file_path, integrated_file_path):
         try:
             with open(individual_file, 'r', encoding='utf-8') as f:
                 data = json.load(f)
+                last_url = data[0]['url']
             update = True
 
         except FileNotFoundError:
             data = None
             update = False
+            last_url = None
             dump, page_num = start_from_dump(individual_file_name)
 
             if dump:
                 pages = np.append(dump, pages)
 
         while not last_page:
-            one_page, last_page = crawler(page_num, category_num, category_name, update=update, whole_data=data)
+            one_page, last_page = crawler(page_num, category_num, category_name, update, last_url, whole_data=data)
             if one_page:
                 pages = np.append(pages, one_page)
                 page_num += 1

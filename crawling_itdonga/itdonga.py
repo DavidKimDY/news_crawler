@@ -110,4 +110,3 @@ def itdonga_crawler(file_path):
     with open(file, 'w', encoding='utf-8') as f:
         json.dump(pages, f, indent='\t', ensure_ascii=False)
     print(corp, ' Done')
-

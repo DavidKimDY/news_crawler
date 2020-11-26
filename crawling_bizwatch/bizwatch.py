@@ -84,7 +84,7 @@ def crawler(page_num, whole_data=None):
         time = parse_time(_time)
         cat = parse_cat(_cat)
         
-        if exception(title, cat) :
+        if exception(title, cat):
             continue
 
         obj = {'corp': CORP,

@@ -3,7 +3,7 @@ from bs4 import BeautifulSoup as bs
 import json
 import numpy as np
 import os
-from utils import stop
+from utils import stop, start_from_dump, temp_dump
 
 main_page = 'https://www.hellodd.com/news/articleList.html?page={}&view_type=sm'
 url_head = 'https://www.hellodd.com'
@@ -59,17 +59,31 @@ def hellodd_crawler(file_path):
     file_name = 'hellodd.json'
     file = os.path.join(file_path, file_name)
 
-    with open(file, 'r', encoding='utf-8') as f:
-        data = json.load(f)
+    try:
+        with open(file, 'r', encoding='utf-8') as f:
+            data = json.load(f)
+        update = True
+
+    except FileNotFoundError:
+        data = None
+        update = False
+        dump, page_num = start_from_dump(corp)
+
+        if dump:
+            pages = np.append(dump, pages)
 
     while not last_page:
         one_page, last_page = hellodd(page_num, whole_data=data)
-        pages = np.append(pages, one_page)
-        page_num += 1
+        if one_page:
 
-    pages = np.append(pages, data)
+            pages = np.append(pages, one_page)
+            page_num += 1
+            temp_dump(pages, page_num, corp, update)
+
+    if data:
+        pages = np.append(pages, data)
+
     pages = pages.tolist()
-
     with open(file, 'w', encoding='utf-8',) as f:
         json.dump(pages, f, indent='\t', ensure_ascii=False)
     print(corp, ' Done')

@@ -3,7 +3,7 @@ from bs4 import BeautifulSoup as bs
 import json
 import numpy as np
 import os
-from utils import stop
+from utils import stop, temp_dump, start_from_dump
 
 
 api_key = "irobotnews"
@@ -44,35 +44,47 @@ def irobotnews(page_number, update=False, whole_data=None):
                'url': url,
                'category': cat}
 
-        if update and stop(obj, whole_data):
+        if stop(obj, whole_data):
             last_page = True
-            break
+            return last_page, one_page
 
         print(corp, ': ', title)
         one_page.append(obj)
+
+    last_page = True if not one_page else False
 
     return last_page, one_page
 
 
 def irobotnews_crawler(file_path):
 
+    pages = np.array([])
+    page_num = 1
     file_name = '{}.json'.format(api_key)
     file = os.path.join(file_path, file_name)
+
     try:
         with open(file, 'r', encoding='utf-8') as f:
             data = json.load(f)
+            update = True
     except FileNotFoundError:
-        print('FileNotFoundError: expected {} but there is not.'.format(file))
-        return
+        dump, page_num = start_from_dump(corp)
+        data = None
+        update = False
 
+        if dump:
+            pages = np.append(dump, pages)
 
-    pages = []
-    page_num = 1
     last_page = False
     while not last_page:
         last_page, one_page = irobotnews(page_num, update=True, whole_data=data)
-        pages = np.append(pages, one_page)
-        page_num += 1
+        if one_page:
+            pages = np.append(pages, one_page)
+            page_num += 1
+            temp_dump(pages, page_num, corp, update)
+
+    if data:
+        pages = np.append(pages, data)
 
     pages = np.append(pages, data).tolist()
     with open(file, 'w', encoding='utf-8') as f:

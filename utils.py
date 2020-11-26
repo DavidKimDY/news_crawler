@@ -9,7 +9,7 @@ import re
 def temp_dump(pages, page_num, file_name, update):
 
     if update:
-        return
+        return None
     if page_num % 10 == 0:
         print('Dump util ', page_num)
         pages = pages.tolist()
@@ -40,7 +40,7 @@ def get_soup(page):
     return soup
 
 
-def first_or_continuous(file_name, corp):
+def first_or_continuous(file_name, individual_file_name):
 
     pages = np.array([])
 
@@ -56,7 +56,7 @@ def first_or_continuous(file_name, corp):
         last_url = None
         data = None
         update = False
-        dump, page_num = start_from_dump(corp)
+        dump, page_num = start_from_dump(individual_file_name)
 
         if dump:
             pages = np.append(dump, pages)
@@ -89,6 +89,9 @@ def integrate_files(individual_file_path, integrate_file_path, cate_list, corp):
 
 
 def stop(obj, whole_data):
+
+    if whole_data is None:
+        return False
 
     latest_urls = [obj['url'] for obj in whole_data[:100]]
     last_day = whole_data[0]['day']
