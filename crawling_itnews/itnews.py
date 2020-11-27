@@ -2,7 +2,9 @@ import os
 import json
 from crawling_itnews.url_crawler import post_soup, url_crawler
 
-ID_PARAMS = {'log': 'coredottoday',
+# They someitmes block a ID. So I created two IDs in order to detour the blocking.
+log = ['coredottoday', 'coredottoday2']
+ID_PARAMS = {'log': log[1],
              'pwd': 'core.today',
              'redirect_to': '',
              'a': 'login',
@@ -32,7 +34,7 @@ def get_data(page, soup):
     return [corp, url, title, thumb, day, time, cat]
 
 
-def scraping(urls: list, ID_PARAMS: dict):
+def scraping(urls: list, ID_PARAMS: dict, file):
 
     '''
     :param urls: list
@@ -50,12 +52,12 @@ def scraping(urls: list, ID_PARAMS: dict):
     newsdata = []
     for page in urls:
         bin = {}
+        print(page)
         soup = post_soup(page, ID_PARAMS)
         data = get_data(page, soup)
         bin['corp'], bin['url'], bin['title'], bin['thumb'], bin['day'], bin['time'], bin['cat'] = data
         newsdata.append(bin)
-
-        with open('/Users/daeyeop/Work/News Crawler/DB file/{}.json'.format(CORP), 'w', encoding='utf-8') as f:
+        with open(file, 'w', encoding='utf-8') as f:
             json.dump(newsdata, f, indent='\t', ensure_ascii=False)
 
     return newsdata
@@ -80,7 +82,7 @@ def itnews_crawler(file_path, url_path, initial=False):
             existed_url = json.load(f)
 
     new_url = url_crawler(existed_url)
-    result = scraping(new_url, ID_PARAMS)
+    result = scraping(new_url, ID_PARAMS, file)
 
     if result:
         with open(file, 'r', encoding='utf-8') as f:

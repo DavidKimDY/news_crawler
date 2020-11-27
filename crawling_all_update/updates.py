@@ -26,7 +26,7 @@ file_path = os.path.join(base_path, 'DB file')
 temp_file_path = os.path.join(base_path, 'temp file')
 url_file_path_itnews = os.path.join(base_path, 'itnews url/url_database.json')
 
-'''clomag_crawler(integrated_file_path=file_path, individual_file_path=temp_file_path )
+clomag_crawler(integrated_file_path=file_path, individual_file_path=temp_file_path )
 ainews_crawler(integrated_file_path=file_path, individual_file_path=temp_file_path )
 platum_crawler(integrated_file_path=file_path, individual_file_path=temp_file_path )
 venturesquare_crawler(file_path)
@@ -41,6 +41,6 @@ klnews_crawler(file_path)
 mobileinside_crawler(file_path)
 vrn_crawler(file_path)
 sciencetimes_crawler(file_path)
-itchosun_crawler(file_path)'''
+itchosun_crawler(file_path)
 itnews_crawler(file_path, url_file_path_itnews)
 
